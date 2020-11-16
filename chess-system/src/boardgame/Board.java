@@ -34,4 +34,13 @@ public class Board {
 	public Piece piece(Position position) {
 		return pieces[position.getRow()][position.getColumn()];
 	}
+	
+	public void placePiece(Piece piece, Position position) {
+		//updates the position of the piece on the matrix
+		pieces[position.getRow()][position.getColumn()] = piece;
+		
+		//updates the piece position on the obj piece
+		piece.position = position;
+		
+	}
 }
