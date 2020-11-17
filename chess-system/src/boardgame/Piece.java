@@ -9,7 +9,8 @@ public class Piece {
 		//this.position = null; java automatically sets position as null, since its not informed
 
 	}
-
+	
+	
 	
 	protected Board getBoard() {
 		return board;
