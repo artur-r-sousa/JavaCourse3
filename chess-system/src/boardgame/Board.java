@@ -45,8 +45,7 @@ public class Board {
 		if(thereIsAPiece(position)) {
 			throw new BoardException("There is already a piece on the position" + position);
 		}
-		
-		
+	
 		//updates the position of the piece on the matrix
 		pieces[position.getRow()][position.getColumn()] = piece;
 		
@@ -73,8 +72,6 @@ public class Board {
 		pieces[position.getRow()][position.getColumn()] = null;
 		return aux;
 	}
-	
-	
 	
 	public boolean positionExists(Position position) {
 		return positionExists(position.getRow(), position.getColumn());
