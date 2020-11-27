@@ -9,12 +9,13 @@ import java.util.Scanner;
 import java.util.Set;
 
 import model.entities.User;
+import model.service.DbAcess;
 
 public class Program {
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.US);
-		Set<User> list = new HashSet<>();
+		Set<User> set = new HashSet<>();
 		String path = "C:\\Users\\artur\\Desktop\\java workspace\\in.txt";
 		Scanner sc = new Scanner(System.in);
 		int i = 0;
@@ -24,7 +25,7 @@ public class Program {
 			while (i == 0) {
 				System.out.println("Choose Operation: ");
 				sc.nextLine();
-				System.out.println("Search Users(u) // Leave the System (q) // Add User(a)");
+				System.out.println("Search Users(u) // Leave the System (q) // Add User(a) // Delete User(d)");
 				String ch = sc.nextLine();
 				if (ch.equals("q")) {
 					i = 1;
@@ -35,18 +36,19 @@ public class Program {
 					Long accNum = sc.nextLong();
 					while (dataCsv != null) {
 						String[] fields = dataCsv.split(",");
-						list.add(new User(fields[0], Double.parseDouble(fields[1]), fields[2], Long.parseLong(fields[3]), fields[4]));
+						set.add(new User(fields[0], Double.parseDouble(fields[1]), fields[2], Long.parseLong(fields[3]), fields[4]));
 						dataCsv = br.readLine();
 
 					}
-					for (User user : list) {
-						if (user.getCreditCard().equals(accNum))
+					for (User user : set) {
+						if (user.getCreditCard().equals(accNum)) {
 							System.out.println("User Info: " + "\n" +
 									"Name: " + user.getName() + "\n" +
 									"AccountBalance: " +  "$" + String.format("%.2f", user.getAccountBalance()) + "\n" +
 									"CC Number: " + user.getCreditCard() + "\n" +
 									"Email: " + user.getEmail() + "\n" +
 									"Country: " + user.getCountry() + "\n");
+						}
 					}
 
 				} 
@@ -80,12 +82,42 @@ public class Program {
 						String confirm = sc.nextLine();
 						
 						if (confirm.equals("y")) {
-							list.add(nUser);
-							nUser.sendToDb(list);
+							set.add(nUser);
+							nUser.sendToDb(set);
 						}			
 					}				
 				} 
-				else if (!ch.equals("q") && !ch.equals("a") && !ch.equals("u")) {
+				else if (ch.equals("d")) {
+
+					System.out.print("Enter CreditCardNumber for the User you want to remove");
+					Long compareMe = sc.nextLong();
+					
+					for (User user : set) {
+						if (user.getCreditCard().equals(compareMe)) {
+							System.out.println("Confirm User");
+							System.out.println("User Info: " + "\n" +
+									"Name: " + user.getName() + "\n" +
+									"AccountBalance: " +  "$" + String.format("%.2f", user.getAccountBalance()) + "\n" +
+									"CC Number: " +  user.getCreditCard() + "\n" +
+									"Email: " +  user.getEmail() + "\n" +
+									"Country: " +  user.getCountry() + "\n");
+							sc.nextLine();
+							System.out.println("Confirm Remove? y/n: ");
+							String confirm0 = sc.nextLine();
+							
+							if (confirm0.equals("y")) {
+								set.removeIf(x -> x.getCreditCard().equals(user.getCreditCard()));
+								DbAcess db = new DbAcess();
+								user.sendToDb(set);
+
+							}
+						} else {
+							System.out.println("User not found");
+						}
+						
+					}
+				}
+				else if (!ch.equals("q") && !ch.equals("a") && !ch.equals("u") && !ch.equals("d")) {
 					System.out.println("Wrong option, try again");
 				}
 			}

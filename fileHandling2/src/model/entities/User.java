@@ -64,12 +64,12 @@ public class User implements Comparable<User>{
 		this.country = country;
 	}
 
-	public void sendToDb(Set<User> list) {
+	public void sendToDb(Set<User> set) {
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\Users\\artur\\Desktop\\java workspace\\in.txt"));			
-			for (Object user : list) {
-				bw.newLine();
+			for (Object user : set) {
 				bw.write(user.toString());
+				bw.newLine();
 			}
 			bw.close();
 		} catch (IOException e) {
@@ -86,6 +86,6 @@ public class User implements Comparable<User>{
 	
 	@Override
 	public String toString() {
-		return getName() + "," + String.format("%.2f", getAccountBalance())+ " " + getCreditCard() + " " + getEmail() + " " + getCountry();
+		return getName() + "," + String.format("%.2f", getAccountBalance())  + "," + getEmail() + "," + getCreditCard() + "," + getCountry();
 	}
 }
