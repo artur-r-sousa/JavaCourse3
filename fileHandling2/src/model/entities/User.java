@@ -3,6 +3,7 @@ package model.entities;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Set;
 
 public class User implements Comparable<User>{
 	
@@ -63,14 +64,18 @@ public class User implements Comparable<User>{
 		this.country = country;
 	}
 
-	public void sendToDb(User user) {
+	public void sendToDb(Set<User> list) {
 		try {
-			BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\Users\\artur\\Desktop\\java workspace\\in.txt", true));			
-			bw.append(user.getName() + "," + user.getAccountBalance() + "," + user.getEmail() + "," + user.getCreditCard() + "," + user.getCountry());
-			bw.close();	
+			BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\Users\\artur\\Desktop\\java workspace\\in.txt"));			
+			for (Object user : list) {
+				bw.newLine();
+				bw.write(user.toString());
+			}
+			bw.close();
 		} catch (IOException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
+
 	}
 	
 	@Override
@@ -81,11 +86,6 @@ public class User implements Comparable<User>{
 	
 	@Override
 	public String toString() {
-		return "User Info: " + "\n" +
-		"Name: " + getName() + "\n" +
-		"AccountBalance: " +  "$" + String.format("%.2f", getAccountBalance()) + "\n" +
-		"CC Number: " + getCreditCard() + "\n" +
-		"Email: " + getEmail() + "\n" +
-		"Country: " + getCountry() + "\n";
+		return getName() + "," + String.format("%.2f", getAccountBalance())+ " " + getCreditCard() + " " + getEmail() + " " + getCountry();
 	}
 }
