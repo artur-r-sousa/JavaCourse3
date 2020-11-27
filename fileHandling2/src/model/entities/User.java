@@ -3,7 +3,7 @@ package model.entities;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Set;
+import java.util.List;
 
 public class User implements Comparable<User>{
 	
@@ -36,9 +36,6 @@ public class User implements Comparable<User>{
 		return accountBalance;
 	}
 
-	public void setAccountBalance(double accountBalance) {
-		this.accountBalance = accountBalance;
-	}
 
 	public String getEmail() {
 		return email;
@@ -64,10 +61,10 @@ public class User implements Comparable<User>{
 		this.country = country;
 	}
 
-	public void sendToDb(Set<User> set) {
+	public void sendToDb(List<User> list) {
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\Users\\artur\\Desktop\\java workspace\\in.txt"));			
-			for (Object user : set) {
+			for (User user : list) {
 				bw.write(user.toString());
 				bw.newLine();
 			}
