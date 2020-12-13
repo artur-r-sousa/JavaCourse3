@@ -1,6 +1,11 @@
 package entities;
 
-import java.util.Date;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import db.DB;
+import db.DbException;
 
 public class Worker {
 
@@ -9,17 +14,16 @@ public class Worker {
 	private String email;
 	private Long creditCard;
 	private String country;
-	private Date createdIn;
+	private String createdIn;
 
 	
-	public Worker(String name, Double accountBalance, String email, Long creditCard, String country, Date createdIn) {
+	public Worker(String name, Double accountBalance, String email, Long creditCard, String country, String createdIn) {
 
 		this.name = name;
 		this.accountBalance = accountBalance;
 		this.email = email;
 		this.creditCard = creditCard;
 		this.country = country;
-
 		this.createdIn = createdIn;
 	}
 	
@@ -59,8 +63,28 @@ public class Worker {
 		this.country = country;
 	}
 
-	public Date getCreatedIn() {
+	public String getCreatedIn() {
 		return createdIn;
 	}
+	
+	public void sendWorkerToDB(Worker worker) {
+		try {
+			Connection conn = DB.getConnection();
+			PreparedStatement st = conn.prepareStatement("INSERT INTO Users " + "(Name, AccountBalance, Email, CCV, Country, Date) VALUES " + "(?, ?, ?, ?, ?, ?)");
+			st.setString(1, worker.getName());
+			st.setDouble(2, worker.getAccountBalance());
+			st.setString(3, worker.getEmail());
+			st.setLong(4, worker.getCreditCard());
+			st.setString(5, worker.getCountry());
+			st.setString(6, worker.getCreatedIn());
 
+			st.executeUpdate();
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}finally {
+			DB.closeConnection();
+		}
+	}
+	
+		
 }
