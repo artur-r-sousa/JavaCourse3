@@ -1,12 +1,5 @@
 package entities;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
-import db.DB;
-import db.DbException;
-
 public class Worker {
 
 	private String name;
@@ -16,7 +9,9 @@ public class Worker {
 	private String country;
 	private String createdIn;
 
-	
+	public Worker() {
+		
+	}
 	public Worker(String name, Double accountBalance, String email, Long creditCard, String country, String createdIn) {
 
 		this.name = name;
@@ -38,7 +33,9 @@ public class Worker {
 	public double getAccountBalance() {
 		return accountBalance;
 	}
-
+	public void setAccountBalance(Double accountBalance) {
+		this.accountBalance = accountBalance;
+	}
 	public String getEmail() {
 		return email;
 	}
@@ -67,24 +64,14 @@ public class Worker {
 		return createdIn;
 	}
 	
-	public void sendWorkerToDB(Worker worker) {
-		try {
-			Connection conn = DB.getConnection();
-			PreparedStatement st = conn.prepareStatement("INSERT INTO Users " + "(Name, AccountBalance, Email, CCV, Country, Date) VALUES " + "(?, ?, ?, ?, ?, ?)");
-			st.setString(1, worker.getName());
-			st.setDouble(2, worker.getAccountBalance());
-			st.setString(3, worker.getEmail());
-			st.setLong(4, worker.getCreditCard());
-			st.setString(5, worker.getCountry());
-			st.setString(6, worker.getCreatedIn());
+	public void setCreatedIn(String createdIn) {
+		this.createdIn = createdIn;
+	}
 
-			st.executeUpdate();
-		} catch (SQLException e) {
-			throw new DbException(e.getMessage());
-		}finally {
-			DB.closeConnection();
-		}
+	@Override
+	public String toString() {
+		return "Worker [name=" + name + ", accountBalance=" + accountBalance + ", email=" + email + ", creditCard="
+				+ creditCard + ", country=" + country + ", createdIn=" + createdIn + "]";
 	}
 	
-		
 }
