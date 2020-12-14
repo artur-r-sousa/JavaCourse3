@@ -15,14 +15,14 @@ public class Main {
 		
 		
 		db.sendWorkerToDB(new Worker("John Paul Jones", 9.00, "bass@ledZeppelin.com", Long.parseLong("5140806899961234"), "United Kingdom", "2010-04-17T23:22:40Z"));
-		db.getWorkerFromDB(Long.parseLong("5140806899961234"));
-		System.out.println(db.getWorkerFromDB(Long.parseLong("5140806899961234")));
-		System.out.println(db.getWorkerFromDB(Long.parseLong("5140806899966830")));
-		db.updateWorkerName("Name", Long.parseLong("5140806899966830"));	
-		db.updateWorkerEmail("testemail@test.com", Long.parseLong("5140806899966830"));
-		db.updateWorkerCountry("United Kingdom",  Long.parseLong("5140806899966830"));
-		db.withdraw(0.12, Long.parseLong("5140806899966830"));
-		db.deposit(1.,  Long.parseLong("5140806899966830"));
+		db.getWorkerFromDB(5140806899961234L);
+		System.out.println(db.getWorkerFromDB(5140806899961234L));
+		System.out.println(db.getWorkerFromDB(5140806899966830L));
+		db.updateWorkerName("Name", 5140806899966830L);	
+		db.updateWorkerEmail("testemail@test.com", 5140806899966830L);
+		db.updateWorkerCountry("United Kingdom",  5140806899966830L);
+		db.withdraw(0.12, 5140806899966830L);
+		db.deposit(1., 5140806899966830L);
 		
 		
 		System.out.println(db.getWorkerFromDB(Long.parseLong("5140806899966830")));
